@@ -1,0 +1,4 @@
+Source: https://raw.githubusercontent.com/microsoft/VisEval/55162fac5765d8873180d962cce7e20e75b2c092/viseval_dataset.zip
+Commit: 55162fac5765d8873180d962cce7e20e75b2c092
+ZIP SHA256: 4d9490493880b37b9b7345b13403bd9d52edfd66577c5f696e1094b35a88b92a
+License: MIT (Microsoft VisEval)

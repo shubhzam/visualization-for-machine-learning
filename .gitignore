@@ -1,0 +1,14 @@
+.env
+.venv/
+__pycache__/
+*.egg-info/
+.ipynb_checkpoints/
+outputs/
+data/visEval_dataset/
+*.pyc
+
+# Local machine files and executed notebook outputs
+.DS_Store
+.env.*
+!.env.example
+*.executed.ipynb

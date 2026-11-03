@@ -1,0 +1,19 @@
+{
+  "mode": "live",
+  "seed": 42,
+  "dataset_dir": "data/visEval_dataset",
+  "development_fraction": 0.2,
+  "strategies": ["S1", "S2", "S3", "S4"],
+  "models": [{
+    "name": "api-model",
+    "model_env": "CHARTBREAK_MODEL",
+    "base_url_env": "CHARTBREAK_BASE_URL",
+    "api_key_env": "CHARTBREAK_API_KEY",
+    "temperature": 0,
+    "max_tokens": 4096
+  }],
+  "max_repairs": 2,
+  "timeout_seconds": 60,
+  "sandbox_image": "chartbreak-worker:0.1",
+  "output_dir": "outputs"
+}

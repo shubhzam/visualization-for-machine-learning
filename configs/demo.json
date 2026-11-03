@@ -1,0 +1,8 @@
+{
+  "mode": "demo",
+  "seed": 42,
+  "strategies": ["S1", "S2", "S3", "S4"],
+  "models": [{"name": "demo-model", "model": "deterministic-fixture"}],
+  "max_repairs": 2,
+  "output_dir": "outputs"
+}
