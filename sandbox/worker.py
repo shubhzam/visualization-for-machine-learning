@@ -10,11 +10,12 @@ import matplotlib.pyplot as plt
 
 try:
     runpy.run_path('/input/generated.py', run_name='__main__')
-    if len(plt.get_fignums()) != 1:
-        raise ValueError('Expected exactly one Matplotlib figure.')
+    if not plt.get_fignums():
+        raise ValueError('No Matplotlib figure was created.')
+    # same as viseval: if there are several figures, the current one is scored
     plt.gcf().savefig('/output/chart.svg', format='svg')
     plt.gcf().savefig('/output/chart.png', format='png', dpi=110)
-    result = dict(ok=True, error='')
+    result = dict(ok=True, error='', n_figures=len(plt.get_fignums()))
 except BaseException:
     result = dict(ok=False, error=traceback.format_exc()[-6000:])
 Path('/output/execution.json').write_text(json.dumps(result))
