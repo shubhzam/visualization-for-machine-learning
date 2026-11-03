@@ -16,4 +16,12 @@ with tempfile.TemporaryDirectory(dir='outputs') as folder:
     assert first_failure(checks)=='pass',checks
     bad=runner.execute('raise RuntimeError("intentional smoke test")',case,root/'bad')
     assert not bad['ok'] and 'intentional smoke test' in bad['error'],bad
+    two=runner.execute('import matplotlib.pyplot as plt\nplt.figure()\n'+reference_code(case),case,root/'two')
+    assert two['ok'] and two['n_figures']==2,two
+    checks=[dict(aspect='code execution',answer=True,rationale='')]+runner.evaluate(two,case,root/'two')
+    assert first_failure(checks)=='pass',checks
+    none=runner.execute('x = 1',case,root/'none')
+    assert not none['ok'] and 'No Matplotlib figure' in none['error'],none
+    text=runner.execute("import matplotlib.pyplot as plt\nplt.bar(['Beyoncé', 'a → b'], [1, 2])\n",case,root/'utf8')
+    assert text['ok'],text
     print('PASS: real Matplotlib chart + official VisEval checks; execution errors captured.')

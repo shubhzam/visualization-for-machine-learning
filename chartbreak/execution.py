@@ -10,15 +10,17 @@ class InfrastructureError(RuntimeError):
 
 
 class DockerRunner:
-    def __init__(self, image='chartbreak-worker:0.1', timeout=60):
+    def __init__(self, image='chartbreak-worker:0.2', timeout=60):
         self.image, self.timeout = image, timeout
+        self.image_id = None
 
     def preflight(self):
         if not shutil.which('docker'):
             raise InfrastructureError('Install and start Docker Desktop, then build the worker image (README).')
-        result = subprocess.run(['docker', 'image', 'inspect', self.image], capture_output=True, text=True)
+        result = subprocess.run(['docker', 'image', 'inspect', '--format', '{{.Id}}', self.image], capture_output=True, text=True)
         if result.returncode:
-            raise InfrastructureError('Start Docker and run: docker build -t chartbreak-worker:0.1 sandbox')
+            raise InfrastructureError('Start Docker and run: docker build -t chartbreak-worker:0.2 sandbox')
+        self.image_id = result.stdout.strip()
 
     def _run(self, script, mounts):
         name = 'chartbreak-' + uuid.uuid4().hex
@@ -48,7 +50,8 @@ class DockerRunner:
         for p in [source, data, output]:
             p.mkdir(parents=True, exist_ok=True)
         output.chmod(0o777)
-        (source / 'generated.py').write_text(code)
+        # windows defaults to cp1252, which broke labels like 'é' inside the container
+        (source / 'generated.py').write_text(code, encoding='utf-8', newline='')
         for table in case['tables']:
             shutil.copyfile(table, data / Path(table).name)
         completed = self._run('worker.py', [(source,'/input','ro'), (data,'/data','ro'), (output,'/output','rw')])

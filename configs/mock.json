@@ -1,0 +1,14 @@
+{
+  "mode": "mock",
+  "seed": 42,
+  "dataset_dir": "data/visEval_dataset",
+  "split_file": "splits/split_v1.json",
+  "sample_per_chart_type": 10,
+  "s2_verified_examples": "configs/s2_verified_examples.json",
+  "strategies": ["S1", "S2", "S3", "S4"],
+  "models": [{"name": "mock-model"}],
+  "max_repairs": 2,
+  "timeout_seconds": 60,
+  "sandbox_image": "chartbreak-worker:0.2",
+  "output_dir": "outputs"
+}

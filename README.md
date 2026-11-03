@@ -30,7 +30,7 @@ python3 -m chartbreak run --config configs/demo.json --limit 12
 1. Start Docker Desktop and build the isolated worker once:
 
    ```bash
-   docker build -t chartbreak-worker:0.1 sandbox
+   docker build -t chartbreak-worker:0.2 sandbox
    ```
 
 2. Run `cp .env.example .env`, then fill in `CHARTBREAK_API_KEY`,
@@ -55,7 +55,8 @@ python3 -m chartbreak run --config configs/demo.json --limit 12
    Provider failures are recorded separately and excluded from correctness rates.
    Runs use new directories, so running again repeats model calls.
 
-Add additional entries to `configs/live.json` for the two HPC models. Each model can use
+Add additional entries to `configs/live.json` for the two open models (Qwen2.5-Coder-7B-Instruct
+and Llama-3.1-8B-Instruct), served with vLLM on Colab GPUs. Each model can use
 its own `model_env`, `base_url_env`, and `api_key_env`. A vLLM server can use the same
 client through an accessible HTTPS endpoint or a localhost SSH tunnel. Set `temperature`
 to `null` only if the provider does not accept it; record that deviation in the report.
@@ -64,13 +65,19 @@ Do not put actual keys directly in JSON configuration.
 ## Implemented
 
 - **S1:** question, table columns, five preview rows, full CSVs available to generated code.
-- **S2:** three examples retrieved by word overlap from development databases. Starter
-  examples use benchmark SQL and chart templates for simple bar, pie, line, and scatter
-  charts. They are not yet a curated or independently validated demonstration bank.
+- **S2:** three examples retrieved by word overlap from development databases. Examples
+  use benchmark SQL and chart templates for simple bar, pie, line, and scatter charts.
+  `scripts/verify_s2_examples.py` runs every candidate through the sandbox and the official
+  checkers; S2 retrieves only those that pass (`configs/s2_verified_examples.json`).
+  Stacked and grouped chart examples are not yet available.
 - **S3:** a separate planning call followed by a code-generation call.
 - **S4:** S1 followed by up to two self-check/repair calls. Only execution errors and the
   model's own code are returned; ground-truth legality feedback is never sent to it.
-- Deterministic database split: 20% development, remaining databases for evaluation.
+- Frozen database split in `splits/split_v1.json` (made by `scripts/02_make_split.py`):
+  29 development databases (523 queries) and 117 evaluation databases (2,001 queries).
+- Optional reproducible stratified sample (`sample_per_chart_type` in the config): a fixed
+  number of evaluation charts per chart type, one paraphrase each. Without it, `--limit`
+  takes the first queries in file order, which come from very few charts and databases.
 - Real Matplotlib execution in containers with networking disabled, read-only inputs,
   no API keys, CPU/memory/process limits, and execution timeouts.
 - Official VisEval surface-form, deconstruction, chart-type, data, and order checks.
@@ -111,10 +118,11 @@ for a future D3 frontend. A result is keyed by query ID, model, and strategy. Al
 receive the same selected evaluation queries; paraphrases share their chart ID.
 
 The proposal's full research deliverables still require a linked D3 frontend,
-CoML4VIS reference runs, audited few-shot examples, readability sampling, SHAP explanations,
-paired significance tests with multiple-comparison correction, a checker audit, and the
-user study. The current predictor uses the implemented features; schema size is a future
-addition. The backend is a runnable foundation, not a claim that those studies are complete.
+CoML4VIS reference runs, few-shot examples for stacked and grouped charts, readability
+sampling, paired significance tests with multiple-comparison correction, rerun churn, a
+checker audit, and usage scenarios with a notebook baseline plus formative expert feedback
+(replacing the controlled user study). The failure predictor and SHAP are stretch goals.
+The backend is a runnable foundation, not a claim that those studies are complete.
 
 ## Verification
 
@@ -130,6 +138,15 @@ The first checks dataset shape, split isolation, prompt boundaries, self-repair,
 labels, statistical summaries, and saved demo outputs. The second needs the built Docker
 image and checks a real Matplotlib chart against VisEval, plus an intentional code error.
 Live-provider calls require your credentials and have not been run during setup.
+
+The ground-truth pilot (no LLM) runs inside the sandbox image and writes `results/pilot_*.json`:
+
+```bash
+docker run --rm --network none -v "$PWD:/repo:ro" -v "$PWD/results:/repo/results" -w /repo chartbreak-worker:0.2 python scripts/01_pilot.py
+```
+
+To try the whole pipeline without an API key, `python -m chartbreak run --config configs/mock.json --limit 70`
+uses a fake offline model with the real data, sandbox and checkers. Its numbers mean nothing.
 
 Ground truth is only available to a separate checker container after generation finishes.
 Container/environment failures stop the run and leave its manifest marked interrupted;

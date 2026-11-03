@@ -11,8 +11,8 @@ def evaluate_predictors(records, folds=5):
     from sklearn.ensemble import HistGradientBoostingClassifier
     from sklearn.model_selection import GroupKFold
     from sklearn.metrics import roc_auc_score, average_precision_score
-    if any(r['mode']=='demo' for r in records):
-        raise ValueError('Predictor evaluation requires real model results, not simulated fixtures.')
+    if any(r['mode'] in {'demo','mock'} for r in records):
+        raise ValueError('Predictor evaluation requires real model results, not simulated or mock fixtures.')
     scored=[r for r in records if r['outcome'] in EVALUATED]
     frame=pd.DataFrame([dict(**r['features'],model=r['model'],strategy=r['strategy'],db_id=r['db_id'],failure=int(r['outcome']!='pass')) for r in scored])
     if frame.empty or frame.db_id.nunique()<folds:

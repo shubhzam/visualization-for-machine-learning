@@ -1,0 +1,151 @@
+{
+  "description": "Correct ground-truth charts rejected by the data check: candidate checker false failures (seed the audit; flagged in V4).",
+  "n": 29,
+  "queries": [
+    {
+      "query_id": "446:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"The Case: Off the Record\", \"field_y\": 8.99} not found\n"
+    },
+    {
+      "query_id": "446:1",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"The Case: Off the Record\", \"field_y\": 8.99} not found\n"
+    },
+    {
+      "query_id": "446:2",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"The Case: Off the Record\", \"field_y\": 8.99} not found\n"
+    },
+    {
+      "query_id": "461:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Gortahile\", \"field_y\": 12.99} not found\n"
+    },
+    {
+      "query_id": "462:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"The Case of the Piggy Banker\", \"field_y\": 12.99} not found\n"
+    },
+    {
+      "query_id": "743:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"PP\", \"field_y\": 4} found more than one."
+    },
+    {
+      "query_id": "743:1",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"PP\", \"field_y\": 4} found more than one."
+    },
+    {
+      "query_id": "1395:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Mass suicide\", \"field_y\": 6} found more than one."
+    },
+    {
+      "query_id": "1395:1",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Mass suicide\", \"field_y\": 6} found more than one."
+    },
+    {
+      "query_id": "2093:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Reinger, Hudson and Nolan Group\", \"field_y\": 2} not found\n"
+    },
+    {
+      "query_id": "2093:1",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Reinger, Hudson and Nolan Group\", \"field_y\": 2} not found\n"
+    },
+    {
+      "query_id": "2309:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Chevrolet\", \"field_y\": 1} found more than one."
+    },
+    {
+      "query_id": "2343:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Schneider Kreuznach Super Angulon 14mm f /2.0\", \"field_y\": 2} not found\n"
+    },
+    {
+      "query_id": "2343:1",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Schneider Kreuznach Super Angulon 14mm f /2.0\", \"field_y\": 2} not found\n"
+    },
+    {
+      "query_id": "2343:2",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Schneider Kreuznach Super Angulon 14mm f /2.0\", \"field_y\": 2} not found\n"
+    },
+    {
+      "query_id": "2506:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Hemkade 48 Zaandam\", \"field_y\": 2} found more than one."
+    },
+    {
+      "query_id": "2506:1",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Hemkade 48 Zaandam\", \"field_y\": 2} found more than one."
+    },
+    {
+      "query_id": "2506:2",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Hemkade 48 Zaandam\", \"field_y\": 2} found more than one."
+    },
+    {
+      "query_id": "2620:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Seeds\", \"field_y\": 3} not found\n"
+    },
+    {
+      "query_id": "2620:1",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Seeds\", \"field_y\": 3} not found\n"
+    },
+    {
+      "query_id": "2620:2",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Seeds\", \"field_y\": 3} not found\n"
+    },
+    {
+      "query_id": "2620:3",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Seeds\", \"field_y\": 3} not found\n"
+    },
+    {
+      "query_id": "2804:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Business Policy\", \"field_y\": 1} found more than one."
+    },
+    {
+      "query_id": "2804:1",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Business Policy\", \"field_y\": 1} found more than one."
+    },
+    {
+      "query_id": "3063:0",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Sky Famiglia\", \"field_y\": 8} found more than one."
+    },
+    {
+      "query_id": "3063:1",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Sky Famiglia\", \"field_y\": 8} found more than one."
+    },
+    {
+      "query_id": "3063:2",
+      "chart_type": "Pie",
+      "rationale": "{\"field_x\": \"Sky Famiglia\", \"field_y\": 8} found more than one."
+    },
+    {
+      "query_id": "3067:0",
+      "chart_type": "Bar",
+      "rationale": "{\"field_x\": \"Susan\", \"field_y\": 100} not found."
+    },
+    {
+      "query_id": "927@y_name@ASC:0",
+      "chart_type": "Stacked Bar",
+      "rationale": "{\"field_x\": \"Wed\", \"field_y\": 1, \"field_classify\": \"Regular\"} not found."
+    }
+  ]
+}

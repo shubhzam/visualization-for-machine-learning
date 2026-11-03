@@ -35,7 +35,7 @@ run_dir = Path(EXISTING_RUN) if EXISTING_RUN else run("configs/live.json" if LIV
 records = load_results(run_dir)
 manifest = json.loads((run_dir / "manifest.json").read_text())
 print("Mode:", manifest["mode"], "| Status:", manifest["status"], "| Run:", run_dir.name)
-if manifest["mode"] == "demo":
+if manifest["mode"] in {"demo", "mock"}:
     print("SIMULATED DATA: these outcomes do not measure any AI model.")
 ''')
 md('''## 2. Model × prompting strategy

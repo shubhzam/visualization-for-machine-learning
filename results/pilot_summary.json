@@ -1,0 +1,38 @@
+{
+  "description": "Ground-truth template charts scored by VisEval surface-form and legality checks (no LLM).",
+  "n_queries": 2524,
+  "n_pass": 2451,
+  "pass_rate": 0.9711,
+  "first_failure_counts": {
+    "data check": 29,
+    "order check": 43,
+    "template_error": 1
+  },
+  "failures_by_chart_type": {
+    "Bar": {
+      "order check": 18,
+      "data check": 1
+    },
+    "Grouping Line": {
+      "order check": 1,
+      "template_error": 1
+    },
+    "Grouping Scatter": {},
+    "Line": {
+      "order check": 18
+    },
+    "Pie": {
+      "data check": 27
+    },
+    "Scatter": {},
+    "Stacked Bar": {
+      "order check": 6,
+      "data check": 1
+    }
+  },
+  "environment": {
+    "python": "3.12.16",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.4"
+  }
+}
