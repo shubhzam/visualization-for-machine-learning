@@ -8,7 +8,7 @@ def cases():
                  query=f'DEMO: Show counts by category, example {i}.', tables=[],
                  features=dict(chart_type=['Bar','Pie','Line'][i % 3], hardness=['Easy','Medium'][i % 2],
                  join=i % 2 == 0, sort=i % 3 == 0, binning=False, three_channels=False,
-                 num_tables=1 + i % 2, query_length=8)) for i in range(12)]
+                 multi_table=i % 2 == 1, num_tables=1 + i % 2, query_length=8)) for i in range(12)]
 
 
 def record(case, strategy, model, folder):
