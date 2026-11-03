@@ -19,7 +19,7 @@ def summary(records, group_by=('model','strategy'), seed=42, resamples=1000):
         groups[key].append(row)
     rows = []
     for key, group in sorted(groups.items(), key=lambda x: str(x[0])):
-        scored = [r for r in group if r['outcome'] in EVALUATED]
+        scored = [r for r in group if r['outcome'] in EVALUATED and not r.get('truncated')]
         clusters = defaultdict(list)
         for row in scored:
             clusters[row['chart_id']].append(int(row['outcome']=='pass'))
@@ -44,7 +44,7 @@ def flips(records, model, strategy_a='S1', strategy_b='S4'):
     b = {r['query_id']:r for r in records if r['model']==model and r['strategy']==strategy_b}
     flows = defaultdict(list)
     for query in sorted(a.keys() & b.keys()):
-        if a[query]['outcome'] in EVALUATED and b[query]['outcome'] in EVALUATED:
+        if all(r[query]['outcome'] in EVALUATED and not r[query].get('truncated') for r in (a, b)):
             flows[(a[query]['outcome'],b[query]['outcome'])].append(query)
     return [dict(source=s,target=t,count=len(ids),query_ids=ids) for (s,t),ids in sorted(flows.items())]
 
@@ -57,7 +57,7 @@ def export(run_dir):
     with (run_dir/'results.csv').open('w',newline='') as f:
         writer=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore');writer.writeheader();writer.writerows(records)
     payload = dict(mode=records[0]['mode'] if records else None, summary=stats,
-        feature_slices={f:summary(records,('model','strategy',f)) for f in ['chart_type','hardness','join','sort','binning','three_channels','num_tables']},
+        feature_slices={f:summary(records,('model','strategy',f)) for f in ['chart_type','hardness','join','sort','binning','three_channels','multi_table','num_tables']},
         flows={m:flips(records,m) for m in sorted({r['model'] for r in records})},cases=records)
     (run_dir/'dashboard.json').write_text(json.dumps(payload,indent=2))
     return payload
